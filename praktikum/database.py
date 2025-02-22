@@ -8,7 +8,6 @@ class Database:
     """
     Класс с методами по работе с базой данных.
     """
-
     def __init__(self):
         self.buns: List[Bun] = []
         self.ingredients: List[Ingredient] = []
