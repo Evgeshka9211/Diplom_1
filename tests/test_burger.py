@@ -1,11 +1,9 @@
 import praktikum.ingredient_types
-
 from unittest.mock import Mock
 from praktikum.burger import Burger, Bun
 from praktikum.database import Database
 
 class TestBurger:
-
     """Проверяем задание булочки. Успех."""
     def test_set_buns_success(self):
         burger = Burger()
@@ -13,17 +11,30 @@ class TestBurger:
         burger.set_buns(bun)
         assert burger.bun == bun
 
-    """Проверяем добавление ингредиента. Успех."""
-    def test_add_ingredient_success(self):
+    """Проверяем добавление ингредиента (наименование). Успех."""
+    def test_add_ingredient_name_success(self):
         burger = Burger()
         mock_ingredient = Mock()
         mock_ingredient.get_name.return_value = 'New_bun'
+        burger.add_ingredient(mock_ingredient)
+        assert burger.ingredients[0].get_name() == 'New_bun'
+
+    """Проверяем добавление ингредиента (цена). Успех."""
+    def test_add_ingredient_price_success(self):
+        burger = Burger()
+        mock_ingredient = Mock()
         mock_ingredient.get_price.return_value = 150.0
-        mock_ingredient.get_type.return_value = praktikum.ingredient_types.INGREDIENT_TYPE_FILLING
         burger.add_ingredient(mock_ingredient)
         assert burger.ingredients[0].get_price() == 150.0
-        assert burger.ingredients[0].get_name() == 'New_bun'
+
+    """Проверяем добавление ингредиента (тип). Успех."""
+    def test_add_ingredient_type_success(self):
+        burger = Burger()
+        mock_ingredient = Mock()
+        mock_ingredient.get_type.return_value = praktikum.ingredient_types.INGREDIENT_TYPE_FILLING
+        burger.add_ingredient(mock_ingredient)
         assert burger.ingredients[0].get_type() == praktikum.ingredient_types.INGREDIENT_TYPE_FILLING
+
 
     """Проверяем удаление ингредиента. Успех."""
     def test_remove_ingredient_success(self):
@@ -55,7 +66,6 @@ class TestBurger:
         burger.add_ingredient(database.available_ingredients()[0])
         burger.add_ingredient(database.available_ingredients()[4])
         assert burger.get_price() == 500.0
-
 
     """Проверяем получение чека. Успех."""
     def test_get_receipt_success(self):
